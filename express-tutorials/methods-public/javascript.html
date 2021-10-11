@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.22.0/axios.min.js" integrity="sha512-m2ssMAtdCEYGWXQ8hXVG4Q39uKYtbfaJL5QMTbhl2kc6vYyubrKHhr6aLLXW4ITeXSywQLn1AhsAaqrJl8Acfg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Adehenry: Server Test Form</title>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <div class="first">
+                <p>HTTP Methds</p>
+            </div>
+            <div class="second">
+                <div class="regular"><a href="./index.html"><p>Regular</p></a></div>
+                <div class="javascript"><a href="./javascript.html"><p>Javascript</p></a></div>
+            </div>
+        </div>
+        <form class="form">
+            <p>Traditional Form</p>
+            <label for="users">Enter Name</label>
+            <input type="text" name="name" id="name" autocomplete="false">
+            <div class="form-alert"></div>
+            <button type="submit">Submit</button>
+            <div class="category"><p>JAVASCRIPT</p></div>
+        </form>
+        <div class="result"></div>
+    </div>
+
+    <script>
+        const result = document.querySelector('.result');
+        const btn = document.querySelector('button')
+        const input = document.querySelector('input')
+        const formAlert = document.querySelector('.form-alert')
+
+const fetchPeople = async () => {
+      try {
+          const {data} = await axios.get('/api/people')
+
+          const people = data.data.map((person) => {
+              return `<h5>${person.name}</h5>`
+          })
+          result.innerHTML = people.join('')
+
+      } catch (error) {
+          result.innerHTML = `<h5 class="result error-alert">Can't Fetch Data!</h5>`
+      }
+}
+fetchPeople()
+
+btn.addEventListener('click', async (e) => {
+    e.preventDefault()
+    const nameValue = input.value;
+
+    try {
+        
+        const {data} = await axios.post('/api/people', {name: nameValue})
+        const h5 = document.createElement('h5')
+        h5.textContent =  data.person
+        result.appendChild(h5)
+        formAlert.textContent = ''
+
+    } catch (error) {
+        formAlert.textContent = error.response.data.msg
+    }
+    input.value = ''
+    
+})
+    </script>
+</body>
+</html>

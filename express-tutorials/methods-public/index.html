@@ -5,21 +5,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="./public.js"></script>
     <title>Adehenry: Server Test Form</title>
 </head>
 <body>
     <div class="container">
         <div class="nav">
-            <div class="first"><p>HTTP Methds</p></div>
-            <div class="second"><p>Regular Javascript</p></div>
+            <div class="first">
+                <p>HTTP Methds</p>
+            </div>
+            <div class="second">
+                <div class="regular"><p><a href="./index.html">Regular</a></p></div>
+                <div class="javascript"><p><a href="./javascript.html">Javascript</a></p></div>
+            </div>
         </div>
-        <div class="form">
+        <form method="POST" action="/login" class="form">
             <p>Traditional Form</p>
             <label for="users">Enter Name</label>
-            <input type="text" name="users" id="users">
-            <button>Submit</button>
-        </div>
+            <input type="text" name="name" id="name" autocomplete="false">
+            <div class="form-alert"></div>
+            <button type="submit">Submit</button>
+        </form>
     </div>
+    <script src="./public.js"></script>
 </body>
 </html>

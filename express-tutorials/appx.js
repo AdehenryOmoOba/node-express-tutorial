@@ -170,17 +170,89 @@
 
 // HTTP Request Methods - GET, POST, PUT, DELETE...
 
+// Using Express to handle incoming POST request on the server side
 
 const express = require('express')
 const app = express();
-let {people} = require('./data')
+let {people} = require('./data');
 
 app.use(express.static('./methods-public'))
+app.use(express.json())
+app.use(express.urlencoded({extended: false})) 
+
+// app.post('/login', (req, res) => {  
+//     const {name} = req.body;
+//     if(name) {
+//      return res.send(`Welcome ${name}!`)
+//     }else {
+//         res.status(401).send(`Please Provide Credentials`)
+//     }
+    
+// })
 
 app.get('/api/people', (req, res) => {
     res.status(200).json({success: true, data: people})
 })
 
+// Using Javascript to handle incoming POST request on the server side ********
+
+// app.post('/api/people', (req, res) => {
+//     const {name} = req.body;
+//     console.log(name)
+//     if(!name) {
+//        return res.status(400).json({Success: false, msg: "Please Enter Your Name"})
+//     }
+
+//     res.status(201).json({Success: true, person: name})
+// })
+
+///////////////////////////////////////////////////////////////////////
+
+
+app.post('/database/add/postman', (req, res) => {
+    const {name} = req.body;
+    console.log(name)
+    const newId = people.length + 1
+    if(!name) {
+     return   res.status(400).json({Success: false, msg: 'Please provide your name'})
+    }
+    res.status(200).send({Success: true, data: [...people, {"Id" : newId, "name": name}]})
+})
+
+app.put('/database/add/postman/:id', (req, res) => {
+    const {id} = req.params
+    const {name} = req.body
+    console.log(Number(id), name)
+
+    const person =  people.find((person) => person.id === Number(id))
+
+    if(!person) {
+       return  res.status(404).json({Success: false, msg: `No person with id ${id}`})
+    }
+
+    const newPeople = people.map((person) => {
+        if(person.id === Number(id)){
+            person.name = name;
+        }
+        return person
+    })
+        return res.status(200).json({Success: true, data: newPeople})
+})
+
+app.delete('/database/add/postman/:id', (req, res) => {
+    const {id} = req.params;
+    const deletePerson = people.find((item) => item.id === Number(id))
+
+    if(!deletePerson){
+        return res.status(404).json({Success: false, msg: `User with id ${id} does not exist!`})
+    }
+    const newPeople = people.filter((person) => person.id !== Number(id))
+        return res.status(200).json({Success: true, data: newPeople})
+
+})
+
 app.listen(5200, () => {
     console.log('Server is up on port 5200...')
 })
+
+

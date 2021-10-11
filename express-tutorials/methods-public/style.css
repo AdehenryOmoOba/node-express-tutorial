@@ -22,6 +22,13 @@
     justify-content: center;
     align-items: center;
 }
+
+
+.second{
+    padding: 0 100px;
+    display: flex;
+    justify-content: space-around;
+}
 .first p, .second p{
     font-size: 32px;
     color: cornsilk;
@@ -30,11 +37,11 @@
 .form{
     display: flex;
     flex-direction: column;
-    padding: 20px 70px;
     margin-right: auto;
     margin-left: auto;
+    padding: 20px 70px;
     width: 800px;
-    height: 300px;
+    height: 350px;
     background-color: red;
     margin-top: 70px;
     border-radius: 5px;
@@ -51,7 +58,6 @@
 
 }
 .form input{
-    margin-bottom: 20px;
     height: 40px;
     border-radius: 5px;
     font-size: 20px;
@@ -66,5 +72,38 @@
     font-size: 20px;
     background-color: blue;
     color: cornsilk;
-
+    margin-bottom: 30px;
+}
+.javascript a,.regular a{
+    text-decoration: none;
+    color: cornsilk;
+}
+form .category p{
+    font-size: 16px;
+    text-align: center;
+}
+.result, .result.error-alert{
+    display: flex;
+    justify-content: center;
+    width: auto;
+    margin-top: 50px;
+    color: red;
+    text-align: center;
+    font-weight: 600;
+    font-size: 32px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.result.error-alert{
+background-color: red;
+color: cornsilk;
+border-radius: 5px;
+padding: 0 10px;
+}
+.result h5{
+    margin: 0 10px;
+}
+.form-alert{
+    height: 40px;
+    color: cornsilk;
 }
