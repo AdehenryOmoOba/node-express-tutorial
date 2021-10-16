@@ -1,3 +1,6 @@
+
+
+
 // SETTING UP SERVER USING THE "HTTP" METHOD...
 
 
@@ -7,7 +10,7 @@
 // const homePage = readFileSync('./index.html')
 // const homeStyles = readFileSync('./style.css')
 
-// const server = http.createServer((req, res) => {
+// const Server = http.createServer((req, res) => {
 //     const url = req.url
 //     if (url === '/') {
 //         res.writeHead(200, {'content-type': 'text/html'})
@@ -29,8 +32,7 @@
    
 // })
 
-// server.listen(5000)
-
+// Server.listen(5500)
 
 //-----------------------------------------------------------------------------------
 
@@ -44,25 +46,22 @@
 
 // app.use(express.static('./public'))
 
-// app.get('/', (req, res) => {
+// app.get('/flavor1', (req, res) => {
 //     res.status(200)
 //     res.sendFile(path.resolve(__dirname, './index.html'))
 // })
 
-// app.get('/about', (req, res) => {
+// app.get('/flavor1/about', (req, res) => {
 //     res.status(200)
-//     res.send('About US!!!')
+//     res.send('About US...falvor 1')
 // })
 
 // app.all('*', (req, res) => {
 //     res.status(404)
-//     res.send('Page not found!!!')
+//     res.send('Page not found...flavor1')
 // })
 
 
-// app.listen(5000, () =>{
-//     console.log('Server is listening on port : 5000')
-// })
 
 
 // --------------------------------------------------------------------------------
@@ -75,11 +74,11 @@
 // const express = require('express')
 // const app = express()
 
-// app.get('/', (req, res) =>{
-//     res.send(`<h2>Welcome to our Home Page</h2><p>Click here to view our <a href ='/welcome/products'>products</a></p>`)
+// app.get('/flavor2', (req, res) =>{
+//     res.send(`<h2>Welcome to our Home Page</h2><p>Click here to view our <a href ='/flavor2/welcome/products'>products</a></p>`)
 // })
 
-// app.get('/welcome/products', (req, res) => {
+// app.get('/flavor2/welcome/products', (req, res) => {
 //   const newProduct = products.map((pruductSummary) => {
 //       const {id, name, image} = pruductSummary;
 //       return {id, name, image}
@@ -88,7 +87,7 @@
 //   res.end()
 // })
 
-// app.get('/welcome/products/:productId', (req, res) =>{
+// app.get('/flavor2/welcome/products/:productId', (req, res) =>{
 //     const {productId} = req.params;
 
 //     const singleProduct = products.find((singleItem) => singleItem.id === Number(productId))
@@ -99,7 +98,7 @@
 //     return res.json(singleProduct)
 // })
 
-// app.get('/search/v1/query', (req, res) => {
+// app.get('/flavor2/search/v1/query', (req, res) => {
 //     console.log(req.query)
 //     const {search, limit} = req.query;
 //     let sortedProducts = [...products];
@@ -123,9 +122,7 @@
 //     res.send(`Page not found...<p>Click here to return to <a href ='/'>Home Page</a></p>`)
 // })
 
-// app.listen(5500, () => {
-//     console.log('Server listening on port 5500...')
-// })
+
 
 
 //------------------------------------------------------------------------------------
@@ -136,33 +133,30 @@
 
 // const { response } = require('express');
 // const morgan = require('morgan')
-// const express = require('express')
 // const logger = require('./logger')
 // const authorize = require('./authorize')
+// const express = require('express')
 // const app = express();
 
-// // app.use([logger, authorize])
+// app.use([logger, authorize])
 // app.use(morgan('tiny'))
 
-// app.get('/', (req, res) => {
+// app.get('/flavor3', (req, res) => {
 //  res.send(`<h1>HOME - NodeJS Middleware Tutorials</h1>`)
 // })
 
-// app.get('/about', (req, res) => {
+// app.get('/flavor3/about', (req, res) => {
 //     res.send(`<h1>About Page</h1>`)
 //    })
 
-// app.get('/products', (req, res) => {
+// app.get('/flavor3/products', (req, res) => {
 //     res.send(`<h1>Product Page</h1>`)
 //    })
 
-// app.get('/contact', (req, res) => {
+// app.get('/flavor3/contact', (req, res) => {
 //     res.send(`<h1>Contact Page</h1>`)
 //    })
 
-// app.listen(5400, () =>{
-//     console.log('Server is up on port 5400...')
-// })
 
 
 //-----------------------------------------------------------------------------
@@ -170,89 +164,21 @@
 
 // HTTP Request Methods - GET, POST, PUT, DELETE...
 
-// Using Express to handle incoming POST request on the server side
-
+// Using Express to handle incoming POST request on the server side...
 const express = require('express')
-const app = express();
-let {people} = require('./data');
+const app = express()
+const router = require('./routerFolder/routerFile')
+
+
 
 app.use(express.static('./methods-public'))
 app.use(express.json())
 app.use(express.urlencoded({extended: false})) 
-
-// app.post('/login', (req, res) => {  
-//     const {name} = req.body;
-//     if(name) {
-//      return res.send(`Welcome ${name}!`)
-//     }else {
-//         res.status(401).send(`Please Provide Credentials`)
-//     }
-    
-// })
-
-app.get('/api/people', (req, res) => {
-    res.status(200).json({success: true, data: people})
-})
-
-// Using Javascript to handle incoming POST request on the server side ********
-
-// app.post('/api/people', (req, res) => {
-//     const {name} = req.body;
-//     console.log(name)
-//     if(!name) {
-//        return res.status(400).json({Success: false, msg: "Please Enter Your Name"})
-//     }
-
-//     res.status(201).json({Success: true, person: name})
-// })
-
-///////////////////////////////////////////////////////////////////////
+app.use('/flavor4', router)
 
 
-app.post('/database/add/postman', (req, res) => {
-    const {name} = req.body;
-    console.log(name)
-    const newId = people.length + 1
-    if(!name) {
-     return   res.status(400).json({Success: false, msg: 'Please provide your name'})
-    }
-    res.status(200).send({Success: true, data: [...people, {"Id" : newId, "name": name}]})
-})
-
-app.put('/database/add/postman/:id', (req, res) => {
-    const {id} = req.params
-    const {name} = req.body
-    console.log(Number(id), name)
-
-    const person =  people.find((person) => person.id === Number(id))
-
-    if(!person) {
-       return  res.status(404).json({Success: false, msg: `No person with id ${id}`})
-    }
-
-    const newPeople = people.map((person) => {
-        if(person.id === Number(id)){
-            person.name = name;
-        }
-        return person
-    })
-        return res.status(200).json({Success: true, data: newPeople})
-})
-
-app.delete('/database/add/postman/:id', (req, res) => {
-    const {id} = req.params;
-    const deletePerson = people.find((item) => item.id === Number(id))
-
-    if(!deletePerson){
-        return res.status(404).json({Success: false, msg: `User with id ${id} does not exist!`})
-    }
-    const newPeople = people.filter((person) => person.id !== Number(id))
-        return res.status(200).json({Success: true, data: newPeople})
-
-})
-
-app.listen(5200, () => {
-    console.log('Server is up on port 5200...')
+app.listen(5000, () => {
+    console.log('Server is up on port 5000...')
 })
 
 
